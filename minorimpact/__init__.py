@@ -37,6 +37,7 @@ def randintodd(min, max):
         else: int = int - 1
     return int
 
+# Split a string into a list of strings no more than <maxlength> long.
 def splitstringlen(string, maxlength):
     newstrings = []
     for i in range(0, len(string), maxlength):
