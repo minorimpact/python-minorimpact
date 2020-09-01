@@ -38,8 +38,11 @@ def randintodd(min, max):
     return int
 
 # Split a string into a list of strings no more than <maxlength> long.
-def splitstringlen(string, maxlength):
+def splitstringlen(string, maxlength, expandtabs=True):
     newstrings = []
+    if (expandtabs):
+        string = string.replace("\t", "    ")
+
     for i in range(0, len(string), maxlength):
         newstrings.append(string[i:i+maxlength])
     return newstrings
