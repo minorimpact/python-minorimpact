@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import hashlib
+import os.path
 import random
 
 def getChar():
@@ -30,6 +32,21 @@ def getChar():
 
     return getChar._func()
 
+def md5dir(filename):
+    m = hashlib.md5()
+    if (os.path.isdir(filename)):
+        for f in sorted(os.listdir(filename)):
+            md5 = md5dir(filename + "/" + f)
+            m.update(md5.encode('utf-8'))
+    else:
+        with open(filename, 'rb') as f:
+            data = f.read(1048576)
+            while(data):
+                md5 = hashlib.md5(data).hexdigest()
+                m.update(md5.encode('utf-8'))
+                data = f.read(1048576)
+    return m.hexdigest()
+
 def randintodd(min, max):
     int = random.randint(min,max)
     if (int % 2) == 0:
@@ -46,5 +63,14 @@ def splitstringlen(string, maxlength, expandtabs=True):
     for i in range(0, len(string), maxlength):
         newstrings.append(string[i:i+maxlength])
     return newstrings
+
+def dirsize(filename):
+    size = 0
+    if (os.path.isdir(filename)):
+        for f in os.listdir(filename):
+            size += dirsize(filename + "/" + f)
+    else:
+        size = os.path.getsize(filename)
+    return size
 
 
