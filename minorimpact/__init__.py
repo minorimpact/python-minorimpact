@@ -2,7 +2,30 @@
 
 import hashlib
 import os.path
+import psutil
 import random
+
+def checkforduplicates(pidfile = None):
+    if (pidfile is None):
+        return
+
+    oldpid = None
+    if (os.path.exists(pidfile)):
+        with open(pidfile, "r") as p:
+            oldpid = p.read().rstrip()
+
+    if (oldpid is not None):
+        for proc in psutil.process_iter():
+            try:
+                if int(oldpid) == proc.pid:
+                    sys.exit("already running")
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+
+    pid = os.getpid()
+
+    with open(pidfile, "w") as p:
+        p.write(str(pid))
 
 def getChar(default = None, end = '\n', prompt = None, echo = False):
     # figure out which function to use once, and store it in _func
