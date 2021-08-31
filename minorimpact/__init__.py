@@ -4,6 +4,7 @@ import hashlib
 import os.path
 import psutil
 import random
+import sys
 
 def checkforduplicates(pidfile = None):
     if (pidfile is None):
