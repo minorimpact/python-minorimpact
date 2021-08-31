@@ -4,7 +4,7 @@ import hashlib
 import os.path
 import random
 
-def getChar():
+def getChar(default = None, end = '\n', prompt = None, echo = False):
     # figure out which function to use once, and store it in _func
     if "_func" not in getChar.__dict__:
         try:
@@ -30,7 +30,12 @@ def getChar():
 
             getChar._func=_ttyRead
 
-    return getChar._func()
+    if (prompt is not None):
+        print(prompt, end = '', flush = True)
+    c = getChar._func()
+    if (default is not None and c == '\n'): c = default
+    if (echo): print(c, end = end, flush = True)
+    return c
 
 def md5dir(filename):
     m = hashlib.md5()
