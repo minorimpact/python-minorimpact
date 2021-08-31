@@ -4,9 +4,10 @@ import minorimpact
 import os
 import tempfile
 import unittest
+from unittest import mock
+import sys
 
-class TestNote(unittest.TestCase):
-
+class TestUtils(unittest.TestCase):
     test_dir = None
 
     #def __init__(self, methodName):
@@ -36,6 +37,15 @@ class TestNote(unittest.TestCase):
         size = minorimpact.dirsize(".")
         self.assertEqual(size, 9)
 
+    def test_002_getChar(self):
+        fd = sys.stdin.fileno()
+        sys.stdin = mock.Mock()
+        sys.stdin.read.return_value = '\n'
+        sys.stdin.fileno.return_value = fd
+        c = minorimpact.getChar(default="y").lower()
+        self.assertEqual(c, 'y')
+        c = minorimpact.getChar().lower()
+        self.assertNotEqual(c, 'y')
 
 if __name__ == "__main__":
     unittest.main()
