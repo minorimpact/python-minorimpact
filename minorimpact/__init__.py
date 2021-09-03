@@ -8,7 +8,7 @@ import sys
 
 def checkforduplicates(pidfile = None):
     if (pidfile is None):
-        return
+        return False
 
     oldpid = None
     if (os.path.exists(pidfile)):
@@ -19,7 +19,7 @@ def checkforduplicates(pidfile = None):
         for proc in psutil.process_iter():
             try:
                 if int(oldpid) == proc.pid:
-                    sys.exit("already running")
+                    return True
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 pass
 
@@ -27,6 +27,7 @@ def checkforduplicates(pidfile = None):
 
     with open(pidfile, "w") as p:
         p.write(str(pid))
+    return False
 
 def getChar(default = None, end = '\n', prompt = None, echo = False):
     # figure out which function to use once, and store it in _func
