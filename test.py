@@ -5,6 +5,7 @@ import os
 import tempfile
 import unittest
 from unittest import mock
+import random
 import sys
 
 class TestUtils(unittest.TestCase):
@@ -46,6 +47,11 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(c, 'y')
         c = minorimpact.getChar().lower()
         self.assertNotEqual(c, 'y')
+
+    def test_003_randintodd(self):
+        random.seed(1)
+        rand = minorimpact.randintodd(1,1000)
+        self.assertEqual(rand, 139)
 
 if __name__ == "__main__":
     unittest.main()
