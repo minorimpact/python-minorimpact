@@ -31,6 +31,22 @@ def checkforduplicates(pidfile = None):
         p.write(str(pid))
     return False
 
+def disksize(size, units="k"):
+    if (units.lower() == "g"):
+        size = size * 1024 * 1024 * 1024
+    elif (units.lower() == "m"):
+        size = size * 1024 * 1024
+    elif (units.lower() == "k"):
+        size = size * 1024
+
+    if (size > 1024*1024*1024):
+        return f"{size/(1024*1024*1024):.1f}GB"
+    if (size > 1024*1024):
+        return f"{size/(1024*1024):.1f}MB"
+    if (size > 1024):
+        return f"{size/(1024):.1f}KB"
+    return f"{size}B"
+
 # Prints to stderr.
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
