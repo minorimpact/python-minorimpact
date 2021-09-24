@@ -1,29 +1,10 @@
 # python-minorimpact
 
-
-
-## Build
-
-    $ python setup.py sdist
-
-
-### PyPi Upload
-
-Old method:
-
-    $ python setup.py sdist upload
-
-New method:
-
-    $ twine upload dist/*
+A set of general purpose utility scripts for personal use.
 
 ## Installation
 
-### Testing
+    $ pip3 install minorimpact
 
-    $ pip3 install dist/*
 
-### Generally
-
-    $ pip install minorimpact
 

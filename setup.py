@@ -11,7 +11,8 @@ setup(
     author='Patrick Gillan',
     author_email = 'pgillan@minorimpact.com',
     license='GPLv3',
-    install_requires=[],
+    install_requires=['psutil'],
     setup_requires=[],
     tests_require=[],
+    url = "https://github.com/minorimpact/python-minorimpact",
 )

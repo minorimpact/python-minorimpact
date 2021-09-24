@@ -6,7 +6,7 @@ import psutil
 import random
 import sys
 
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 
 # Reads a process id from *pidfile* and checks for it  in the current list of running processes.
 #   Returns True if it finds it, False otherwise.
