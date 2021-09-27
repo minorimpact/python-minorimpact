@@ -6,7 +6,9 @@ import psutil
 import random
 import sys
 
-__version__ = "0.0.7"
+__version__ = "0.0.8"
+
+default_arg_flags = { 'debug':False, 'dryrun':False, 'force':False, 'verbose':False, 'yes':False }
 
 # Reads a process id from *pidfile* and checks for it  in the current list of running processes.
 #   Returns True if it finds it, False otherwise.
