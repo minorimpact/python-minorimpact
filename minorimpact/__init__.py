@@ -6,7 +6,7 @@ import psutil
 import random
 import sys
 
-__version__ = "0.0.8"
+__version__ = "0.0.9"
 
 default_arg_flags = { 'debug':False, 'dryrun':False, 'force':False, 'verbose':False, 'yes':False }
 

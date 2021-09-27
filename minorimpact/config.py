@@ -29,7 +29,7 @@ def getConfig(config = None, interpolation = None, script_name = None, verbose =
             config_basename = config
 
     if (config_filename is None):
-        for path in [home + '/.conf/' + script_name, home, '/etc']:
+        for path in [home + '/.config/' + script_name, home, '/etc']:
             if (verbose is True): print(f"checking {path}/ ... ", end='')
             test_filename = f'{path}/{config_basename}'
             if (os.path.exists(test_filename)):
