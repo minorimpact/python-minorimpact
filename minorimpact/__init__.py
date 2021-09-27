@@ -10,9 +10,23 @@ __version__ = "0.0.8"
 
 default_arg_flags = { 'debug':False, 'dryrun':False, 'force':False, 'verbose':False, 'yes':False }
 
-# Reads a process id from *pidfile* and checks for it  in the current list of running processes.
-#   Returns True if it finds it, False otherwise.
 def checkforduplicates(pidfile = None):
+    """Checks pidfile to see if an instance of this script is already running.
+
+    Checks the process list for a current process with the id stored in pidfile.  If no such
+    process exists, stores the current process id in pidfile and returns False, otherwise returns
+    True.
+
+    Parameters
+    ----------
+    pidfile: string
+        The full pathname of the file that contains the process id.
+
+    Returns
+    -------
+    boolean
+        True if another version of this script is already running, False otherwise.
+    """
     if (pidfile is None):
         return False
 
@@ -35,7 +49,15 @@ def checkforduplicates(pidfile = None):
         p.write(str(pid))
     return False
 
-def disksize(size, units="k"):
+def disksize(*args, **kwargs):
+    return filesize(*args, **kwargs)
+
+# Prints to stderr.
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+def filesize(size, units="k"):
+    """Takes a the size of the file and type of unit, returns a human readable file size string."""
     if (units.lower() == "g"):
         size = size * 1024 * 1024 * 1024
     elif (units.lower() == "m"):
@@ -51,22 +73,30 @@ def disksize(size, units="k"):
         return f"{size/(1024):.1f}KB"
     return f"{size}B"
 
-# Prints to stderr.
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
-
-# Identical to print(), but it flushes the cache everytime.  Useful to capture stdout from a long
-#   running cron.
 def fprint(*args, **kwargs):
+    """Identical to print(), but it flushes the cache everytime.  Useful to capture stdout from a long running cron."""
     print(*args, flush=True, **kwargs)
 
-# Gets a single character from stdin.
-# Optional parameters:
-#   *default*: what to return if the user simply presses 'return'.
-#   *echo*: display the pressed character.
-#   *end*: what to follow the character with, if *echo* is True.
-#   *prompt*: A string to print before pausing for input.
 def getChar(default = None, end = '\n', prompt = None, echo = False):
+    """Gets a single character from stdin.
+
+    Parameters
+    ----------
+    default:string
+        Value to return if the user simply presses 'return'.
+    echo:boolean
+        If True, display the pressed character. Default: False
+    end:string 
+        What to follow the character with, if echo is True. Default: '\n'
+    prompt:string
+        A string to print before pausing for input.
+
+    Returns
+    ------
+    string
+        A single character input by the user.
+    """
+
     # figure out which function to use once, and store it in _func
     if "_func" not in getChar.__dict__:
         try:
@@ -101,9 +131,8 @@ def getChar(default = None, end = '\n', prompt = None, echo = False):
         else: print(c, end = end, flush = True)
     return c
 
-# If *filename* is a directory, recursively traverse it and combine the md5 sums of every file
-#   into a single sum.  Used to verify that a directory's contents have not changed.
 def md5dir(filename):
+    """Given a file or directory path, returns the combined md5sum of it and everything under it, recursively"""
     m = hashlib.md5()
     if (os.path.isdir(filename)):
         for f in sorted(os.listdir(filename)):
@@ -118,16 +147,16 @@ def md5dir(filename):
                 data = f.read(1048576)
     return m.hexdigest()
 
-# Returns a random odd value in the range of *min* to *max*-1, inclusive.  I have no idea why.
 def randintodd(min, max):
+    """Returns a random odd value in the range of min to max-1."""
     int = random.randint(min,max)
     if (int % 2) == 0:
         if (int < max): int = int + 1
         else: int = int - 1
     return int
 
-# Split a string into a list of strings no more than <maxlength> long.
 def splitstringlen(string, maxlength, expandtabs=True):
+    """Splits a string into a list of strings no more than maxlength long."""
     newstrings = []
     if (expandtabs):
         string = string.replace("\t", "    ")
@@ -139,6 +168,7 @@ def splitstringlen(string, maxlength, expandtabs=True):
 # Recursively traverse a directory and collect the total size of every file it contains.  Used to indicate
 #   whether the contents of a directory have changed without incurring the high cost of md5dir().
 def dirsize(filename):
+    """Given a file or directory path, returns the sum if its size and everything under it, recursively."""
     size = 0
     if (os.path.isdir(filename)):
         for f in os.listdir(filename):

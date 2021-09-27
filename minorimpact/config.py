@@ -6,6 +6,7 @@ import re
 import sys
 
 def getConfig(config = None, interpolation = None, script_name = None, verbose = False):
+    """Attempts to scan the environment for a configuration file and parse it with configparser."""
     home = os.environ['HOME'] if 'HOME' in os.environ else ''
     config_basename = None
     config_filename = None
