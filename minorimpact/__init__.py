@@ -6,7 +6,7 @@ import psutil
 import random
 import sys
 
-__version__ = "0.0.9"
+__version__ = "0.0.10"
 
 default_arg_flags = { 'debug':False, 'dryrun':False, 'force':False, 'verbose':False, 'yes':False }
 
@@ -130,6 +130,16 @@ def getChar(default = None, end = '\n', prompt = None, echo = False):
         if (c == '\n'): print("", end = end, flush = True)
         else: print(c, end = end, flush = True)
     return c
+
+def killduplicates(pidfile = None):
+    """Read a process id from pidfile and kill the matching process if it's currently running."""
+    if (pidfile is None):
+        return
+
+    if (checkforduplicates(pidfile)):
+        with open(pidfile, "r") as p:
+            pid = p.read().rstrip()
+            psutil.Process(int(pid)).kill()
 
 def md5dir(filename):
     """Given a file or directory path, returns the combined md5sum of it and everything under it, recursively"""

@@ -17,9 +17,9 @@ def getConfig(config = None, interpolation = None, script_name = None, verbose =
     if script_name is None:
         raise Exception("can't get script name")
 
-    config_basename = script_name + '.conf'
-    if script_name.upper() + '_CONF' in os.environ:
-        config = os.environ[script_name.upper() + '_CONF']
+    env_variable = script_name.upper() + '_CONF'
+    if env_variable in os.environ and os.environ[env_variable]:
+        config = os.environ[env_variable]
 
     if (config is not None):
         if (re.match('/', config)): 
@@ -27,6 +27,8 @@ def getConfig(config = None, interpolation = None, script_name = None, verbose =
             config_basename = os.path.basename(config_filename)
         else:
             config_basename = config
+    else:
+        config_basename = script_name + '.conf'
 
     if (config_filename is None):
         for path in [home + '/.config/' + script_name, home, '/etc']:
