@@ -64,6 +64,16 @@ class TestUtils(unittest.TestCase):
         time.sleep(1)
         self.assertEqual(proc.poll(), -9)
 
+    def test_005_readdir(self):
+        os.mkdir('dir')
+        with open('dir/one', 'a') as f:
+            f.write('foo')
+        os.mkdir('dir/dir')
+        with open('dir/dir/two', 'a') as f:
+            f.write('foo')
+        files = minorimpact.readdir('dir')
+        self.assertEqual(len(files), 2)
+
 
 if __name__ == '__main__':
     unittest.main()

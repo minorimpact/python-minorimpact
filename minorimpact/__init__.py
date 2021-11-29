@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
 import hashlib
+import os
 import os.path
 import psutil
 import random
+import re
 import sys
 
-__version__ = "0.0.10"
+__version__ = "0.0.11"
 
 default_arg_flags = { 'debug':False, 'dryrun':False, 'force':False, 'verbose':False, 'yes':False }
 
@@ -164,6 +166,24 @@ def randintodd(min, max):
         if (int < max): int = int + 1
         else: int = int - 1
     return int
+
+def readdir(dir):
+    """Recursively collect all files in the given directory."""
+    files = []
+    try:
+        foo = os.listdir(dir)
+    except PermissionError as e:
+        print(f"{str(e)}")
+        return []
+
+    for f in foo:
+        if (re.match("^\.", f)): continue
+        file = os.path.join(dir, f)
+        if os.path.isfile(file):
+            files.append(file)
+        elif os.path.isdir(file):
+            files = files + readdir(file)
+    return files
 
 def splitstringlen(string, maxlength, expandtabs=True):
     """Splits a string into a list of strings no more than maxlength long."""
