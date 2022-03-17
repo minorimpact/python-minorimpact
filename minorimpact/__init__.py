@@ -8,7 +8,7 @@ import random
 import re
 import sys
 
-__version__ = "0.0.11"
+__version__ = "0.0.12"
 
 default_arg_flags = { 'debug':False, 'dryrun':False, 'force':False, 'verbose':False, 'yes':False }
 
