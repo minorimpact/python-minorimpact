@@ -52,7 +52,7 @@ def highlight(stdscr, select_y, select_x, mark_y, mark_x):
                         #selected += str(stdscr.inch(y, x))
                         selected += chr(stdscr.inch(y, x) & 0xFF)
                 if (y < my):
-                    selected = f"{selected}\n"
+                    selected = "{}\n".format(selected)
     else:
         stdscr.chgat(select_y, select_x, 1, curses.A_REVERSE)
         selected = chr(stdscr.inch(select_y, select_x) & 0xFF)

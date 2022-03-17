@@ -68,12 +68,12 @@ def filesize(size, units="k"):
         size = size * 1024
 
     if (size > 1024*1024*1024):
-        return f"{size/(1024*1024*1024):.1f}GB"
+        return "{size}GB".format(size = size/(1024*1024*1024))
     if (size > 1024*1024):
-        return f"{size/(1024*1024):.1f}MB"
+        return "{size}MB".format(size = size/(1024*1024))
     if (size > 1024):
-        return f"{size/(1024):.1f}KB"
-    return f"{size}B"
+        return "{size}KB".format(size = size/(1024))
+    return "{size}B".format(size = size)
 
 def fprint(*args, **kwargs):
     """Identical to print(), but it flushes the cache everytime.  Useful to capture stdout from a long running cron."""
@@ -173,7 +173,7 @@ def readdir(dir):
     try:
         foo = os.listdir(dir)
     except PermissionError as e:
-        print(f"{str(e)}")
+        print("{}".format(str(e)))
         return []
 
     for f in foo:

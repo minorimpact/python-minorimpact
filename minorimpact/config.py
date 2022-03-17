@@ -32,8 +32,8 @@ def getConfig(config = None, interpolation = None, script_name = None, verbose =
 
     if (config_filename is None):
         for path in [home + '/.config/' + script_name, home, '/etc']:
-            if (verbose is True): print(f"checking {path}/ ... ", end='')
-            test_filename = f'{path}/{config_basename}'
+            if (verbose is True): print("checking {}/ ... ".format(path), end='')
+            test_filename = '{}/{}'.format(path, config_basename)
             if (os.path.exists(test_filename)):
                 if (verbose is True): print("found")
                 config_filename = test_filename
@@ -42,10 +42,10 @@ def getConfig(config = None, interpolation = None, script_name = None, verbose =
 
     if (config_filename is None):
         if (config_basename is not None):
-            raise Exception(f"{config_basename} not found")
-        raise Exception(f"config file not found")
+            raise Exception("{} not found".format(config_basename))
+        raise Exception("config file not found")
     elif (config_filename is not None and os.path.exists(config_filename) is False):
-        raise Exception(f"{config_filename} not found")
+        raise Exception("{} not found".format(config_filename))
 
     if (interpolation == 'basic'): interpolation = configparser.BasicInterpolation()
     parser = configparser.ConfigParser(interpolation=interpolation)
