@@ -74,6 +74,9 @@ class TestUtils(unittest.TestCase):
         files = minorimpact.readdir('dir')
         self.assertEqual(len(files), 2)
 
+    def test_006_args(self):
+        self.assertFalse(minorimpact.default_arg_flags.debug)
+        self.assertFalse(minorimpact.default_arg_flags.yes)
 
 if __name__ == '__main__':
     unittest.main()

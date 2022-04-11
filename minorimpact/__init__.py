@@ -8,9 +8,16 @@ import random
 import re
 import sys
 
-__version__ = "0.0.12"
+__version__ = "0.0.13"
 
-default_arg_flags = { 'debug':False, 'dryrun':False, 'force':False, 'verbose':False, 'yes':False }
+class minorimpact_args():
+    debug = False
+    dryrun = False
+    force = False
+    verbose = False
+    yes = False
+
+default_arg_flags = minorimpact_args()
 
 def checkforduplicates(pidfile = None):
     """Checks pidfile to see if an instance of this script is already running.
