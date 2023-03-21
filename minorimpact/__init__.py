@@ -58,6 +58,18 @@ def checkforduplicates(pidfile = None):
         p.write(str(pid))
     return False
 
+# Recursively traverse a directory and collect the total size of every file it contains.  Used to indicate
+#   whether the contents of a directory have changed without incurring the high cost of md5dir().
+def dirsize(filename):
+    """Given a file or directory path, returns the sum if its size and everything under it, recursively."""
+    size = 0
+    if (os.path.isdir(filename)):
+        for f in os.listdir(filename):
+            size += dirsize(filename + "/" + f)
+    else:
+        size = os.path.getsize(filename)
+    return size
+
 def disksize(*args, **kwargs):
     return filesize(*args, **kwargs)
 
@@ -202,16 +214,11 @@ def splitstringlen(string, maxlength, expandtabs=True):
         newstrings.append(string[i:i+maxlength])
     return newstrings
 
-# Recursively traverse a directory and collect the total size of every file it contains.  Used to indicate
-#   whether the contents of a directory have changed without incurring the high cost of md5dir().
-def dirsize(filename):
-    """Given a file or directory path, returns the sum if its size and everything under it, recursively."""
-    size = 0
-    if (os.path.isdir(filename)):
-        for f in os.listdir(filename):
-            size += dirsize(filename + "/" + f)
-    else:
-        size = os.path.getsize(filename)
-    return size
-
+def squashlist(oldlist):
+    """Removes duplicate entries from oldlist."""
+    newlist = []
+    for i in oldlist:
+        if (i not in newlist):
+            newlist.append(i)
+    return newlist
 
