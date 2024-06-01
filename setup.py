@@ -19,7 +19,7 @@ setup(
         "Topic :: Utilities",
         ],
     description='Personal utility library',
-    install_requires=['psutil'],
+    install_requires=['pickle','psutil'],
     license='GPLv3',
     long_description = readme,
     long_description_content_type = 'text/markdown',

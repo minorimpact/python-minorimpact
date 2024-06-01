@@ -3,12 +3,13 @@
 import hashlib
 import os
 import os.path
+import pickle
 import psutil
 import random
 import re
 import sys
 
-__version__ = "0.0.13"
+__version__ = "0.0.14"
 
 class minorimpact_args():
     debug = False
@@ -107,7 +108,7 @@ def getChar(default = None, end = '\n', prompt = None, echo = False):
         Value to return if the user simply presses 'return'.
     echo:boolean
         If True, display the pressed character. Default: False
-    end:string 
+    end:string
         What to follow the character with, if echo is True. Default: '\n'
     prompt:string
         A string to print before pausing for input.
@@ -186,6 +187,22 @@ def randintodd(min, max):
         else: int = int - 1
     return int
 
+def read_cache(cache_file, verbose = False, debug = False):
+    """Read previously cache object from cache_file."""
+    cache = {}
+
+    if (cache_file is None):
+        if (debug): print("no cache file defined")
+
+    if (os.path.exists(cache_file) is True):
+        if (debug): print("reading cache from {}".format(cache_file))
+        with open(cache_file, 'rb') as f:
+            cache = pickle.load(f)
+    else:
+        if (debug): print("{} does not exist".format(cache_file))
+
+    return cache
+
 def readdir(dir):
     """Recursively collect all files in the given directory."""
     files = []
@@ -221,4 +238,26 @@ def squashlist(oldlist):
         if (i not in newlist):
             newlist.append(i)
     return newlist
+
+def write_cache(cache_file, cache, debug = False):
+    """Write serialized cache object to cache_file."""
+    if (cache_file is None):
+        if (debug): print("no cache file defined")
+        return
+
+    if (debug): print("writing cache to {}".format(cache_file))
+    pickle_data = pickle.dumps(cache)
+    done = False
+    interrupted = False
+    while done is False:
+        try:
+            with open(cache_file, 'wb') as f:
+                f.write(pickle_data)
+            done = True
+        except KeyboardInterrupt:
+            print("cache dump interrupted - retrying")
+            interrupted = True
+            continue
+    if (interrupted is True):
+        sys.exit()
 

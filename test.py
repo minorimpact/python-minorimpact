@@ -78,5 +78,14 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(minorimpact.default_arg_flags.debug)
         self.assertFalse(minorimpact.default_arg_flags.yes)
 
+    def test_007_cache(self):
+        cache_file = './test.cache'
+        cache = { 'test':2 }
+        minorimpact.write_cache(cache_file, cache)
+
+        cache = minorimpact.read_cache(cache_file)
+        self.assertEqual(cache['test'], 2)
+
 if __name__ == '__main__':
     unittest.main()
+
