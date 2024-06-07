@@ -25,7 +25,7 @@ setup(
     long_description_content_type = 'text/markdown',
     name='minorimpact',
     packages=find_packages(include=['minorimpact']),
-    setup_requires=[],
+    setup_requires=['psutil','wheel'],
     tests_require=[],
     url = "https://github.com/minorimpact/python-minorimpact",
     version=minorimpact.__version__,

@@ -9,7 +9,7 @@ import random
 import re
 import sys
 
-__version__ = "0.0.14"
+__version__ = "0.0.15"
 
 class minorimpact_args():
     debug = False
@@ -213,7 +213,7 @@ def readdir(dir):
         return []
 
     for f in foo:
-        if (re.match("^\.", f)): continue
+        if (re.match("^\\.", f)): continue
         file = os.path.join(dir, f)
         if os.path.isfile(file):
             files.append(file)
