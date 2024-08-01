@@ -9,7 +9,6 @@ with open('./README.md', encoding='utf-8') as f:
 setup(
     author='Patrick Gillan',
     author_email = 'pgillan@minorimpact.com',
-    build_requires=['psutil'],
     classifiers = [
         "Development Status :: 2 - Pre-Alpha",
         "Topic :: Software Development :: Libraries",
@@ -20,13 +19,12 @@ setup(
         "Topic :: Utilities",
         ],
     description='Personal utility library',
-    install_requires=['psutil'],
+    install_requires=['psutil','setuptools','wheel'],
     license='GPLv3',
     long_description = readme,
     long_description_content_type = 'text/markdown',
     name='minorimpact',
     packages=find_packages(include=['minorimpact']),
-    setup_requires=['psutil'],
     tests_require=[],
     url = "https://github.com/minorimpact/python-minorimpact",
     version=minorimpact.__version__,
