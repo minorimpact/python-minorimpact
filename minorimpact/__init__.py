@@ -4,12 +4,11 @@ import hashlib
 import os
 import os.path
 import pickle
-import psutil
 import random
 import re
 import sys
 
-__version__ = "0.0.19"
+__version__ = "0.0.20"
 
 class minorimpact_args():
     debug = False
@@ -46,6 +45,7 @@ def checkforduplicates(pidfile = None):
             oldpid = p.read().rstrip()
 
     if (oldpid is not None):
+        import psutil
         for proc in psutil.process_iter():
             try:
                 if int(oldpid) == proc.pid:
@@ -159,6 +159,7 @@ def killduplicates(pidfile = None):
         return
 
     if (checkforduplicates(pidfile)):
+        import psutil
         with open(pidfile, "r") as p:
             pid = p.read().rstrip()
             psutil.Process(int(pid)).kill()
